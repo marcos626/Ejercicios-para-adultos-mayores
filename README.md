@@ -53,7 +53,7 @@ Todo vive en [ejercicios-en-silla.html](ejercicios-en-silla.html), en este orden
 | `MODULOS` | Los 4 módulos (A, B, C, D) con nombre, colores, texto de introducción, `aviso` opcional y 6 ejercicios cada uno. |
 | `CALENTAMIENTO` | Lista de movimientos del calentamiento (igual todos los días). |
 | `BICI_MIN` | Minutos de bici fija por día: matriz de 4 semanas × 7 días. |
-| `IMGS` | Las 24 imágenes de los ejercicios, en JPEG y codificadas en base64. **Es una sola línea de ~730 KB.** |
+| `IMGS` | Las 24 imágenes de los ejercicios (tomadas del manual de la Universidad de Georgia), en JPEG y codificadas en base64. **Es una sola línea de ~730 KB.** |
 | `PERSONAS` | Las dos personas (`id`, `nombre`, `color` del botón). |
 | `KEY` | La clave de `localStorage`. |
 | Guardado | `loadAll`, `saveAll`, `prog` y `marcarDia`. |
@@ -165,15 +165,15 @@ Editar `PERSONAS`. El `id` es la clave con la que se guarda el progreso: **si se
 
 ## Fuentes
 
-Los ejercicios, los módulos A–D y sus imágenes se basan principalmente en el manual de la Universidad de Georgia. El resto del material se usó como referencia para el calentamiento, la vuelta a la calma y las recomendaciones de seguridad. Los PDF que están en la carpeta local son versiones en español de estos documentos.
+Los ejercicios y los módulos A–D se basan principalmente en el manual de la Universidad de Georgia. Las 24 imágenes de los ejercicios también salen de ese manual (ilustraciones de Krysia Haag). El resto del material se usó como referencia para el calentamiento, la vuelta a la calma y las recomendaciones de seguridad. Los PDF que están en la carpeta local son versiones en español de estos documentos.
 
-1. Bell, M., Sellers, T. y Porter, K. N. *Chair Exercises for Older Adults* [Ejercicios en silla para adultos mayores]. University of Georgia, Department of Foods and Nutrition. Ilustraciones de Krysia Haag; revisión de Bree Marsh. Contacto: Mary Ann Johnson, PhD. Adaptado a su vez de:
+1. Bell, M., Sellers, T. y Porter, K. N. *Senior Chair Exercises* [Ejercicios en silla para adultos mayores]. University of Georgia, Department of Foods and Nutrition. Ilustraciones de Krysia Haag; revisión de Bree Marsh. Contacto: Mary Ann Johnson, PhD. Adaptado a su vez de:
    - National Institute on Aging. *Exercise: A Guide from the National Institute on Aging*, 2001.
    - Tufts University y Centers for Disease Control and Prevention. *Growing Stronger: Strength Training for Older Adults*, 2002.
-   - Archivo local: `Ejercicios en silla Universidad de Georgia.pdf`.
+   - Archivo original: `Senior Chair Exercises.pdf`. Archivo local: `Ejercicios en silla Universidad de Georgia.pdf`.
 2. Health Service Executive (Irlanda). *Easy Exercises: A Chair-Based Programme for Older People* [Ejercicios fáciles: un programa en silla para adultos mayores]. Publicado en enero de 2008, revisado en enero de 2010. Código de pedido HPM00496. <https://www.healthinfo.ie>
-   - Archivo local: `Ejercicios faciles en silla.pdf`.
+   - Archivo original: `easy-chair-based-exercises.pdf`. Archivo local: `Ejercicios faciles en silla.pdf`.
 3. NHS (National Health Service, Reino Unido). *Exercises for Older People – Sitting* [Ejercicios para personas mayores: sentado]. <https://www.nhs.uk/exercises-for-older-people>
-   - Archivo local: `NHS Ejercicios para personas mayores.pdf`.
-4. *Ejercicios en silla y sentados para adultos mayores* (artículo divulgativo, autor y editorial no identificados en el documento). Cita las Guías Canadienses de Actividad Física de la Sociedad Canadiense de Fisiología del Ejercicio.
-   - Archivo local: `Ejercicios en silla para adultos mayores.pdf`.
+   - Archivo original: `NHS-exercises-for-older-people.pdf`. Archivo local: `NHS Ejercicios para personas mayores.pdf`.
+4. Lifeline Canada. *Chair and Seated Exercises for Seniors* [Ejercicios en silla y sentados para adultos mayores]. Cita las Guías Canadienses de Actividad Física de la Sociedad Canadiense de Fisiología del Ejercicio. <https://www.lifeline.ca/en/resources/chair-exercises-for-seniors/>
+   - Archivo original: `Chair-and-Seated-Exercises-For-Seniors.pdf`. Archivo local: `Ejercicios en silla para adultos mayores.pdf`.
