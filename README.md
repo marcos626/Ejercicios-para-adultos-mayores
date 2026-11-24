@@ -11,7 +11,7 @@ App web de un solo archivo ([ejercicios-en-silla.html](ejercicios-en-silla.html)
 
 ## Cómo se distribuye y se usa
 
-1. Se manda el archivo `ejercicios-en-silla.html` al celular (por WhatsApp, mail o cable).
+1. Se manda el archivo `ejercicios-en-silla.html` al celular (por WhatsApp o por mail).
 2. Se descarga y se abre **siempre con el mismo navegador** (por ejemplo Chrome). En lo posible, conviene abrirlo siempre desde el mismo lugar (la carpeta de Descargas), no desde la vista previa de WhatsApp.
 3. Se elige quién va a hacer ejercicio, se toca **Empezar el día N** y se siguen los pasos. Al tocar **Terminé** en el último paso, el día queda marcado.
 
