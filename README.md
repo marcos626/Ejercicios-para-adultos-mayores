@@ -51,9 +51,9 @@ Todo vive en [ejercicios-en-silla.html](ejercicios-en-silla.html), en este orden
 |---|---|
 | `<head>` / `<style>` | Metadatos para celular (`viewport`, `theme-color`, modo app) y todo el CSS. Los colores del módulo actual se aplican con las variables `--mod` y `--modc`. |
 | `MODULOS` | Los 4 módulos (A, B, C, D) con nombre, colores, texto de introducción, `aviso` opcional y 6 ejercicios cada uno. |
-| `CALENTAMIENTO` | Lista de movimientos del calentamiento (igual todos los días). |
-| `BICI_MIN` | Minutos de bici fija por día: matriz de 4 semanas × 7 días. |
-| `IMGS` | Las 24 imágenes de los ejercicios (tomadas del manual de la Universidad de Georgia), en JPEG y codificadas en base64. **Es una sola línea de ~730 KB.** |
+| `CALENTAMIENTO` | Los 7 movimientos del calentamiento (igual todos los días): nombre, imagen, dosis fija y pasos. |
+| `BICI_MIN` | Minutos de bici fija: un número fijo (10) para todas las sesiones. |
+| `IMGS` | Las 31 imágenes, en JPEG y codificadas en base64: 0–23 son los ejercicios de los módulos (manual de la Universidad de Georgia) y 24–30 las del calentamiento. **Es una sola línea de ~960 KB.** |
 | `PERSONAS` | Las dos personas (`id`, `nombre`, `color` del botón). |
 | `KEY` | La clave de `localStorage`. |
 | Guardado | `loadAll`, `saveAll`, `prog` y `marcarDia`. |
@@ -66,7 +66,8 @@ No hay frameworks: cada vista arma su HTML con template strings y asigna los `on
 ### El plan de 28 días
 
 - **Semana = módulo.** Los días 1–7 son del Módulo A, los 8–14 del B, los 15–21 del C y los 22–28 del D (`modDeDia`).
-- Cada sesión tiene: **bici fija → calentamiento → los 6 ejercicios del módulo → vuelta a la calma** (`pasosSesion`).
+- Cada sesión tiene 15 pasos: **bici fija (10 minutos) → 7 movimientos de calentamiento → los 6 ejercicios del módulo → vuelta a la calma** (`pasosSesion`).
+- La bici y el calentamiento son iguales todos los días: **la progresión está solo en los ejercicios del módulo.**
 - **La dosis sube dentro de la semana** según el día de la semana `k` (de 0 a 6, calculado por `kDeDia`):
 
   | `k` (día de la semana) | Valor | Series (solo `reps`) |
@@ -109,7 +110,7 @@ Este mismo JSON es el que exporta e importa la pantalla de Copia de seguridad.
 
 Después de cualquier cambio, conviene abrir el archivo en Chrome de escritorio con las herramientas de desarrollo en modo celular (`F12` → ícono de dispositivo) y recorrer al menos un día completo. Después se vuelve a mandar el `.html` al celular.
 
-> **Cuidado con la línea de `IMGS`:** pesa unos 730 KB en una sola línea. Algunos editores se ponen lentos o la cortan al guardar. Conviene editar las demás partes sin seleccionar esa línea y no aplicar formateadores automáticos (Prettier, etc.) al archivo.
+> **Cuidado con la línea de `IMGS`:** pesa unos 960 KB en una sola línea. Algunos editores se ponen lentos o la cortan al guardar. Conviene editar las demás partes sin seleccionar esa línea y no aplicar formateadores automáticos (Prettier, etc.) al archivo.
 
 ### Cambiar textos o dosis de un ejercicio
 
@@ -125,7 +126,7 @@ Editar el objeto correspondiente dentro de `MODULOS`. Por ejemplo:
 
 ### Agregar o reemplazar una imagen
 
-Las imágenes se referencian por índice (`img: 0` … `img: 23`) dentro del array `IMGS`. Para generar el base64 de una imagen nueva en PowerShell:
+Las imágenes se referencian por índice (`img: 0` … `img: 30`) dentro del array `IMGS`. Para generar el base64 de una imagen nueva en PowerShell:
 
 ```powershell
 $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\ruta\imagen.jpg"))
@@ -136,8 +137,14 @@ Después se pega como un elemento nuevo al final de `IMGS` (o reemplazando uno e
 
 ### Cambiar la bici fija o el calentamiento
 
-- `BICI_MIN[semana][k]` = minutos. Tiene que seguir siendo 4 × 7.
-- `CALENTAMIENTO` es una lista de textos libres.
+- `BICI_MIN` = minutos de bici, iguales para todas las sesiones.
+- `CALENTAMIENTO` es una lista de objetos con la misma forma que los ejercicios, pero con `dosis` como texto fijo:
+
+  ```js
+  { nombre: "Marcha en la silla", img: 24, dosis: "Hasta 60 segundos", pasos: ["...", "..."] },
+  ```
+
+  Cada movimiento es un paso de la sesión. Se pueden agregar o quitar movimientos sin tocar nada más.
 
 ### Cambiar o agregar personas
 
@@ -146,7 +153,7 @@ Editar `PERSONAS`. El `id` es la clave con la que se guarda el progreso: **si se
 ### Cosas que no hay que romper
 
 - **`KEY = "ejercicios-silla-v1"`**: si se cambia, el celular deja de ver todo el progreso anterior. Solo conviene cambiarla si el formato de datos cambia de forma incompatible, y en ese caso hay que migrar los datos viejos al cargar.
-- **Cantidad de días y módulos**: `diaSugerido`, el calendario y los textos asumen 28 días = 4 módulos × 7 días. Para cambiar eso hay que tocar `modDeDia`, `diaSugerido`, `vInicio`, `vFin` y `BICI_MIN`.
+- **Cantidad de días y módulos**: `diaSugerido`, el calendario y los textos asumen 28 días = 4 módulos × 7 días. Para cambiar eso hay que tocar `modDeDia`, `diaSugerido`, `vInicio` y `vFin`.
 - **Cantidad de ejercicios por módulo**: puede variar sin problema, porque la sesión se arma recorriendo `m.ejercicios`.
 
 ---
@@ -157,15 +164,16 @@ Editar `PERSONAS`. El `id` es la clave con la que se guarda el progreso: **si se
 |---|---|---|
 | `ejercicios-en-silla.html` | Sí | La app. |
 | `README.md` | Sí | Este documento. |
-| `.gitignore` | Sí | Excluye los PDF y la carpeta de imágenes. |
+| `.gitignore` | Sí | Excluye los PDF y las carpetas `images/` y `Tai chi imagenes/`. |
 | `*.pdf` | No | Material de referencia (ver Fuentes). |
 | `Tai chi imagenes/` | No | Imágenes de referencia de tai chi en silla. La app no las usa. |
+| `images/` | No | Imágenes originales que se usaron en la app (ya están incluidas dentro del `.html` en base64) y otras de referencia. |
 
 ---
 
 ## Fuentes
 
-Los ejercicios y los módulos A–D se basan principalmente en el manual de la Universidad de Georgia. Las 24 imágenes de los ejercicios también salen de ese manual (ilustraciones de Krysia Haag). El resto del material se usó como referencia para el calentamiento, la vuelta a la calma y las recomendaciones de seguridad. Los PDF que están en la carpeta local son versiones en español de estos documentos.
+Los ejercicios y los módulos A–D se basan principalmente en el manual de la Universidad de Georgia. Las imágenes de los ejercicios también salen de ese manual (ilustraciones de Krysia Haag), salvo la de "Fortalecer las canillas" (`img: 3`), que es `images/Fig.1 Heel-toe raises` de la carpeta local. El calentamiento es la sección "Calentamiento divertido" del folleto del HSE (fuente 2), con sus ilustraciones, más los círculos con los hombros (de la sección "Articulaciones en movimiento" del mismo folleto). Para la marcha en la silla y los círculos con los hombros se usan las imágenes `images/Seated marching.png` e `images/Shoulder rolls.jpg` de la carpeta local. El resto del material se usó como referencia para la vuelta a la calma y las recomendaciones de seguridad. Los PDF que están en la carpeta local son versiones en español de estos documentos.
 
 1. Bell, M., Sellers, T. y Porter, K. N. *Senior Chair Exercises* [Ejercicios en silla para adultos mayores]. University of Georgia, Department of Foods and Nutrition. Ilustraciones de Krysia Haag; revisión de Bree Marsh. Contacto: Mary Ann Johnson, PhD. Adaptado a su vez de:
    - National Institute on Aging. *Exercise: A Guide from the National Institute on Aging*, 2001.
